@@ -1,24 +1,25 @@
 import logo from './logo.svg';
 import './App.css';
 
+import CandidateForm from './components/candidate_form';
+import UpdateCandidateStatusComponent from './components/update_candidate_status_component';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import Header from './components/header';
+import StatusTableFunc from './components/status_table';
+
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+      <Header></Header>
+        <Routes>
+          <Route path="/" element={<StatusTableFunc/>} />
+          <Route path="/edit/:statusId" element={<UpdateCandidateStatusComponent />} />
+          <Route path="/add" element={<CandidateForm/>} />
+        </Routes>
+      </BrowserRouter>
     </div>
+
   );
 }
 
