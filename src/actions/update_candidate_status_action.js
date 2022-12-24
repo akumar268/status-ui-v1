@@ -5,9 +5,10 @@ import { putUrl } from '../utilities/constants';
 const updateCandidateStatusAction = createAsyncThunk(
     'updateCandidate',
     async ({ updatedCandidateStatus, statusId }, rejectWithValue) => {
-        let token =
+        let jwt =
       "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWxsIiwiZXhwIjoxNjcxODE3OTgxLCJpYXQiOjE2NzE3ODE5ODF9.Q2D-HAJjEBbFFbQq54fSGYuE7ooMHQEcFtSTvS7tMNs";
-        try {
+      //let jwt=localStorage.getItem('token');  
+      try {
             await axios.put(putUrl + statusId,
                 updatedCandidateStatus,
                 {
@@ -15,7 +16,7 @@ const updateCandidateStatusAction = createAsyncThunk(
                     'Access-Control-Allow-Origin': '*',
                     'Access-Control-Allow-Methods': "DELETE, POST, GET, OPTIONS",
                     'Access-Control-Allow-Headers': "Content-Type, Authorization, X-Requested-With",
-                    'headers': { "Authorization": `Bearer ${token}` }
+                    'headers': { "Authorization": `Bearer ${jwt}` }
                 });
                 
         } catch (error) {

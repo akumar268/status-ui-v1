@@ -14,7 +14,7 @@ const adminSlice = createSlice({
   initialState: {
     statuses: [],
     loading: false,
-    selected_status: {},
+    
     totalNoOfStatuses: 0,
     serverError: "",
   },

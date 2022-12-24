@@ -2,19 +2,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
 import getStatusesByPagination from "../actions/get_statuses_by_page";
 import { useNavigate, useParams } from "react-router-dom";
-import addNewCandidateStatus from '../actions/add_new_candidate_status';
-import updateCandidateStatusAction from '../actions/update_candidate_status_action';
+import addNewCandidateStatus from "../actions/add_new_candidate_status";
+import updateCandidateStatusAction from "../actions/update_candidate_status_action";
 import Table from "react-bootstrap/Table";
 import Pagination from "react-bootstrap/Pagination";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-
+//import { ToggleButton, ToggleButtonGroup } from "react-bootstrap";
+import ToggleButton from "react-bootstrap/ToggleButton";
+import searchStatusesByPagination from "../actions/search_statuses_by_page";
 
 const StatusTableFunc = (props) => {
   let dispatcher = useDispatch();
   let navigate = useNavigate();
   let statuses = useSelector((state) => state.adminReducer.statuses);
-  let totalNoOfStatuses = useSelector((state) => state.adminReducer.totalNoOfStatuses);
+  let totalNoOfStatuses = useSelector(
+    (state) => state.adminReducer.totalNoOfStatuses
+  );
   console.log("totalNoOfStatuses = ", totalNoOfStatuses);
   //let activePage = useSelector((state)=>state.activePage);
   let activePage = localStorage.getItem("activePage");
@@ -24,12 +28,11 @@ const StatusTableFunc = (props) => {
     return () => dispatcher(getStatusesByPagination(pageDetails));
   }, []);
 
-  const statusIdRef = useRef(null);
   const statusRef = useRef(null);
   //const id=statusId;
   const editStatus = async (statusId) => {
     //const response = await dispatcher(updateCandidateStatusAction(statusId));
-    navigate("/edit/"+statusId);
+    navigate("/edit/" + statusId);
   };
 
   const addStatus = async (statusId) => {
@@ -37,13 +40,27 @@ const StatusTableFunc = (props) => {
     navigate("/add");
   };
 
+  const isActive = async (statusId) => {
+    //dispatcher(softDeleteAction());
+  };
+
   const deleteStatus = async (statusId) => {};
 
-  const searchStatus = (status) => {};
-
   const getNewPage = (number) => {
+    console.log(number);
     let pageDetails = { pageNo: number, pageSize: 3 };
+    console.log(pageDetails);
     dispatcher(getStatusesByPagination(pageDetails));
+  };
+
+  const getSearchPage = (number) => {
+    let pageDetails = {
+      pageNo: number,
+      pageSize: 3,
+      status: statusRef.current.value,
+    };
+    console.log(pageDetails);
+    dispatcher(searchStatusesByPagination(pageDetails));
   };
 
   if (statuses === undefined) statuses = [];
@@ -51,7 +68,7 @@ const StatusTableFunc = (props) => {
   let statusData = statuses.map(function (status, index) {
     return (
       <tr key={status.statusId}>
-        <td>{index+1}</td>
+        <td>{index + 1}</td>
         <td>{status.statusId}</td>
         <td>{status.status}</td>
         <td>
@@ -97,7 +114,7 @@ const StatusTableFunc = (props) => {
         active={number == activePage}
         onClick={() => getNewPage(number)}
       >
-        {number+1}
+        {number + 1}
       </Pagination.Item>
     );
   }
@@ -105,89 +122,90 @@ const StatusTableFunc = (props) => {
   console.log("items - ", items);
   return (
     <form>
-    <div>
-      <h2 align="left">Candidate Status Master</h2>
-      <p align="right">
-      <button type="submit" class="btn btn-primary float-end" onClick={() => addStatus()}
-          value="+ Add Candidate Status">+ Add Status</button>
-        {/* <Button
-          as="input"
-          type="button"
-          onClick={() => addStatus()}
-          value="+ Add Candidate Status"
-        /> */}
-      </p>
-      <h6 align="left">
-      <div class="row">
-          <div class="col-md-1">
-            <div class="form-group">
-              <label class="fw-bolder" for="first">Status Id</label>
+      <div>
+        <h2 align="left">Candidate Status Master</h2>
+        <p align="right">
+          <button
+            type="submit"
+            class="btn btn-primary float-end"
+            onClick={() => addStatus()}
+            value="+ Add Candidate Status"
+          >
+            + Add Status
+          </button>
+        </p>
+        <h6 align="left">
+          <div class="row">
+            <div class="col-md-1">
+              <div class="form-group">
+                <label class="fw-bolder" for="first">
+                  Status Id
+                </label>
+              </div>
+            </div>
+
+            <div class="col-md-5">
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Status Id"
+                  id="statusId"
+                />
+              </div>
             </div>
           </div>
-       
-          <div class="col-md-5">
-            <div class="form-group">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Enter Status Id"
-                id="statusId"
-                ref={statusIdRef}
-              />
+          <br />
+          <div class="row">
+            <div class="col-md-1">
+              <div class="form-group">
+                <label class="fw-bolder" for="first">
+                  Status
+                </label>
+              </div>
             </div>
+            <div class="col-md-5">
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Role Name"
+                  id="roleName"
+                  ref={statusRef}
+                />
+              </div>
+            </div>
+          </div>
+          <br />
+          <Button
+            as="input"
+            type="button"
+            onClick={getSearchPage}
+            value="      Search      "
+          />
+
+          <br />
+          <br />
+        </h6>
+
+        <div class="row mt-5">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Status Id</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>{statusData}</tbody>
+          </table>
+
+          <div>
+            <Pagination>{items}</Pagination>
           </div>
         </div>
-        <br />
-        <div class="row">
-          <div class="col-md-1">
-            <div class="form-group">
-              <label class="fw-bolder" for="first">Status</label>
-            </div>
-          </div>
-          <div class="col-md-5">
-            <div class="form-group">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Enter Role Name"
-                id="roleName"
-                ref={statusRef}
-              />
-            </div>
-          </div>
-        </div>
-        <br />
-        <Button
-          as="input"
-          type="submit"
-          onClick={searchStatus}
-          value="      Search      "
-        />
-
-        <br />
-        <br />
-      </h6>
-
-      <div class="row mt-5">
-        <table class="table table-striped table-hover">
-          <thead>
-            <tr>
-              
-              <th scope="col">#</th>
-              <th scope="col">Status Id</th>
-              <th scope="col">Status</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody>{statusData}</tbody>
-        </table>
-
-        <div>
-          <Pagination>{items}</Pagination>
-        </div>
-
       </div>
-    </div>
     </form>
   );
 };
