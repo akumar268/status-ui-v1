@@ -11,7 +11,7 @@ import Row from "react-bootstrap/Row";
 const CandidateForm = (props) => {
   const statusRef = useRef(null);
 
-  let serverError = useSelector((state) => state.serverError);
+  let statusMessage = useSelector((state) => state.adminReducer.statusMessage);
   let dispatcher = useDispatch();
 
   let navigate = useNavigate();
@@ -43,7 +43,7 @@ const CandidateForm = (props) => {
       console.log(form);
       setErrors({});
       let newCandidateStatus = { status: form.status };
-      serverError = dispatcher(addNewCandidateStatus(newCandidateStatus));
+      statusMessage = dispatcher(addNewCandidateStatus(newCandidateStatus));
     }
   };
 
@@ -80,26 +80,27 @@ const CandidateForm = (props) => {
                 </Form.Control.Feedback>
               </InputGroup>
             </div>
+            <p className="font-weight-bold text-danger">{statusMessage}</p>
           </div>
         </div>
         <div className="row">
           <div className="col-md-2">
-            <button
+            <Button
               type="submit"
               className="btn btn-primary"
               onClick={addCandidateStatus}
             >
               Submit
-            </button>
+            </Button>
           </div>
           <div className="col-md-3">
-            <button
+            <Button
               type="submit"
               className="btn btn-primary"
               onClick={cancelEdit}
             >
               Cancel
-            </button>
+            </Button>
           </div>
         </div>
       </form>

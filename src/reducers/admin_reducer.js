@@ -16,7 +16,7 @@ const adminSlice = createSlice({
     loading: false,
     
     totalNoOfStatuses: 0,
-    serverError: "",
+    statusMessage: ''
   },
   reducers: {},
   extraReducers: {
@@ -43,14 +43,15 @@ const adminSlice = createSlice({
       state.loading = false;
       state.data = payload;
       state.isSuccess = true;
+      state.statusMessage=<p className="font-weight-bold text-success">Candidate Status Succcessfully Added</p>
     },
     [addNewCandidateStatus.rejected]: (state, { payload }) => {
       console.log("Entered reducer rejected state");
       state.loading = false;
       state.isSuccess = false;
       state.message = "failed";
-      state.serverError = "Duplicate Status not allowed";
-      console.log("serverError", state.serverError);
+      state.statusMessage = payload.data;
+      console.log("serverError", state.statusMessage);
     },
     [updateCandidateStatusAction.pending]: (state) => {
       state.loading = true;
