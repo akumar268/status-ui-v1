@@ -48,7 +48,7 @@ const CandidateForm = (props) => {
   };
 
   const cancelEdit = () => {
-    navigate("/");
+    navigate("/candidate-status");
   };
 
   return (

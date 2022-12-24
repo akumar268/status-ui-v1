@@ -32,12 +32,12 @@ const StatusTableFunc = (props) => {
   //const id=statusId;
   const editStatus = async (statusId) => {
     //const response = await dispatcher(updateCandidateStatusAction(statusId));
-    navigate("/edit/" + statusId);
+    navigate("/candidate-status/edit/" + statusId);
   };
 
   const addStatus = async (statusId) => {
     //const response = await dispatcher(addNewCandidateStatus());
-    navigate("/add");
+    navigate("/candidate-status/add");
   };
 
   const isActive = async (statusId) => {
@@ -45,7 +45,7 @@ const StatusTableFunc = (props) => {
   };
 
   const returnHome = async () => {
-    navigate("/");
+    navigate("/candidate-status");
   };
 
   const deleteStatus = async (statusId) => {};
@@ -72,7 +72,7 @@ const StatusTableFunc = (props) => {
   let statusData = statuses.map(function (status, index) {
     return (
       <tr key={status.statusId}>
-        <td>{index + 1}</td>
+        
         <td>{status.statusId}</td>
         <td>{status.status}</td>
         <td>
@@ -204,8 +204,7 @@ const StatusTableFunc = (props) => {
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Status Id</th>
-                <th scope="col">Status</th>
+                <th scope="col">Status Id - Status</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>

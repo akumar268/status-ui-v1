@@ -13,9 +13,9 @@ function App() {
       <BrowserRouter>
       <Header></Header>
         <Routes>
-          <Route path="/" element={<StatusTableFunc/>} />
-          <Route path="/edit/:statusId" element={<UpdateCandidateStatusComponent />} />
-          <Route path="/add" element={<CandidateForm/>} />
+          <Route path="/candidate-status" element={<StatusTableFunc/>} />
+          <Route path="/candidate-status/edit/:statusId" element={<UpdateCandidateStatusComponent />} />
+          <Route path="/candidate-status/add" element={<CandidateForm/>} />
         </Routes>
       </BrowserRouter>
     </div>

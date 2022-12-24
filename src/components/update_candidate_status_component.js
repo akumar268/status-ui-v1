@@ -44,7 +44,7 @@ const UpdateCandidateStatusComponent = (props) => {
     }
 
     const backToPreviousPage = () => {
-        nav('/candidate-status/');
+        nav('/candidate-status');
     };
 
     return (
@@ -101,7 +101,7 @@ const UpdateCandidateStatusComponent = (props) => {
                         <button type="submit" className="btn btn-primary" onClick={updateCandidateStatus}>Update</button>
                     </div>
                     <div className="col-md-3">
-                        <button type="submit" className="btn btn-primary" onClick={backToPreviousPage}>Cancel</button>
+                        <button type="submit" className="btn btn-primary" onClick={backToPreviousPage}>Return</button>
                     </div>
                 </div>
             </form>
