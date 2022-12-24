@@ -44,6 +44,10 @@ const StatusTableFunc = (props) => {
     //dispatcher(softDeleteAction());
   };
 
+  const returnHome = async () => {
+    navigate("/");
+  };
+
   const deleteStatus = async (statusId) => {};
 
   const getNewPage = (number) => {
@@ -183,7 +187,14 @@ const StatusTableFunc = (props) => {
             onClick={getSearchPage}
             value="      Search      "
           />
-
+          <br></br>
+          <br></br>
+          <Button
+            as="input"
+            type="submit"
+            onClick={returnHome}
+            value="      Reset      "
+          />
           <br />
           <br />
         </h6>
